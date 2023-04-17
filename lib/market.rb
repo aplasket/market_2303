@@ -49,7 +49,7 @@ class  Market
     overstocked_items.uniq
   end
 
-  # def total_inventory
+  def total_inventory
   #   #reports the quanitites of all items sold at the market
   # # {item: { quantity: totalinventory of that item, 
   #           # vendors: [vendors that sell item]}}
@@ -72,17 +72,18 @@ class  Market
                 # end
 
       ###try new way::
-  #     quantity_items = vendor.inventory.map do |item, count|
-  #       if vendor.inventory.keys.include?(item)
-  #           vendor.inventory[item] << item_count
-  #       else 
-  #         vendor.inventory[item] = count
-  #       end
-  #     end
+    all_inventory = {}
+    @vendors.map do |vendor|
+      quantity_items = vendor.inventory.map do |item, count|
+        if vendor.inventory.keys.include?(item)
+            vendor.inventory[item] << item_count
+        else 
+          vendor.inventory[item] = count
+        end
+      end
+    end
 
-
-
-  #     all_inventory[item] = {quantity: quantity_items,
-  #                             vendors: vendors_that_sell(item)}
-  # end
+    all_inventory[item] = {quantity: quantity_items,
+                            vendors: vendors_that_sell(item)}
+  end
 end
