@@ -36,6 +36,7 @@ RSpec.describe Market do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
+      
       expect(@market.vendors).to eq([@vendor1, @vendor2, @vendor3])
     end
   end
@@ -45,23 +46,28 @@ RSpec.describe Market do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
+
       expect(@market.vendor_names).to eq(["Rocky Mountain Fresh", "Ba-Nom-a-Nom", "Palisade Peach Shack"])
     end
   end
 
   describe "#vendors that sell" do
-    before(:each) do
+      it "returns an array of vendors that have an item in stock" do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
-    end
 
-    it "returns an array of vendors that have an item in stock" do
       expect(@market.vendors_that_sell(@item1)).to eq([@vendor1, @vendor3])
       expect(@market.vendors_that_sell(@item4)).to eq([@vendor2])
     end
+  end
 
+  describe "checks vendor potential revenue" do
     it "checks the vendors potential revenue" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
       expect(@vendor1.potential_revenue).to eq(29.75)
       expect(@vendor2.potential_revenue).to eq(345.00)
       expect(@vendor3.potential_revenue).to eq(48.75)
