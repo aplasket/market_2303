@@ -14,4 +14,10 @@ class  Market
   def vendor_names
     @vendors.map {|vendor| vendor.name}
   end
+
+  def vendors_that_sell(item)
+    @vendors.find_all do |vendor|
+      vendor.inventory.keys.include?(item)
+    end
+  end
 end
