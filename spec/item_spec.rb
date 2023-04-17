@@ -9,7 +9,9 @@ RSpec.describe Item do
 
   describe "#initialize" do
     it "exists and has attributes" do
-      
+      expect(@item1).to be_an(Item)
+      expect(@item2.name).to eq("Tomato")
+      expect(@item2.price).to eq(0.5)
     end
   end
 end
