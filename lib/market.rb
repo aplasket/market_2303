@@ -48,42 +48,14 @@ class  Market
   def total_inventory
     all_inventory = {}
 
-    #
-
-
-    # @vendors.map do |vendor|
-    #   quantity_items = vendor.inventory.map do |item, count|
-    #     if all_inventory.keys.include?(item)
-    #         vendor.inventory[item] << item_count
-    #     else 
-    #       all_inventory[item] = count
-    #     end
-    #   end
-    # end
-
-    all_inventory[item] = {quantity: total_quantites(item),
+    @vendors.map do |vendor|
+      vendor.inventory.each_pair do |item, quantity|
+        # require 'pry'; binding.pry
+        all_inventory[item] = {quantity: total_quantities(item),
                             vendors: vendors_that_sell(item)}
-  
-  #   #reports the quanitites of all items sold at the market
-  # # {item: { quantity: totalinventory of that item, 
-  #           # vendors: [vendors that sell item]}}
-    
-  #   all_inventory = {}
-  #   item_count = 0
-  #   @vendors.map do |vendor|
-        # too complicated -- try new way
-                #   vendor.inventory.each do |item, count|
-                #     if vendors_that_sell(item).count > 1 
-                #       vendors_that_sell(item).each do |vendor_item|
-                #         item_count += vendor.inventory[item]
-                #           # require 'pry'; binding.pry
-                #       end
-                #     end
+      end
+    end
 
-                #     all_inventory[item] = {quantity: item_count,
-                #                             vendors: vendors_that_sell(item)}
-                #   end
-                # end
-
+    all_inventory
   end
 end

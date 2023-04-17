@@ -103,7 +103,7 @@ end
   end
 
   describe "#total inventory" do
-    xit "returns a hash of all items sold at market with hash values" do
+    it "returns a hash of all items sold at market with hash values" do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
