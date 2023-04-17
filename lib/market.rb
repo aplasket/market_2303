@@ -29,15 +29,7 @@ class  Market
     end.flatten.uniq.sort
   end
 
-  def total_inventory
-    #reports the quanitites of all items sold at the market
-  # {item: { quantity: totalinventory of that item, 
-            # vendors: [vendors that sell item]}}
-  end
-
   def overstocked_items
-    # array of Item objects that are overstocked. 
-    # it's overstocked if sold by more than 1 vendor AND total quantity is > 50
     overstocked_items = []
     quantity = 0 
     @vendors.each do |vendor|
@@ -56,4 +48,41 @@ class  Market
     end
     overstocked_items.uniq
   end
+
+  # def total_inventory
+  #   #reports the quanitites of all items sold at the market
+  # # {item: { quantity: totalinventory of that item, 
+  #           # vendors: [vendors that sell item]}}
+    
+  #   all_inventory = {}
+  #   item_count = 0
+  #   @vendors.map do |vendor|
+        # too complicated -- try new way
+                #   vendor.inventory.each do |item, count|
+                #     if vendors_that_sell(item).count > 1 
+                #       vendors_that_sell(item).each do |vendor_item|
+                #         item_count += vendor.inventory[item]
+                #           # require 'pry'; binding.pry
+                #       end
+                #     end
+
+                #     all_inventory[item] = {quantity: item_count,
+                #                             vendors: vendors_that_sell(item)}
+                #   end
+                # end
+
+      ###try new way::
+  #     quantity_items = vendor.inventory.map do |item, count|
+  #       if vendor.inventory.keys.include?(item)
+  #           vendor.inventory[item] << item_count
+  #       else 
+  #         vendor.inventory[item] = count
+  #       end
+  #     end
+
+
+
+  #     all_inventory[item] = {quantity: quantity_items,
+  #                             vendors: vendors_that_sell(item)}
+  # end
 end

@@ -74,6 +74,19 @@ RSpec.describe Market do
     end
   end
 
+  describe "#overstocked items" do
+    it "returns an array of Item objects that are overstocked" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.overstocked_items).to eq([@item1])
+
+      @vendor2.stock(@item2, 60)
+      expect(@market.overstocked_items).to eq([@item1, @item2])
+    end
+end
+
   # @item1 = Item.new({name: 'Peach', price: "$0.75"})
   # @item2 = Item.new({name: 'Tomato', price: "$0.50"})
   # @item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
@@ -99,26 +112,21 @@ RSpec.describe Market do
       expect(@vendor2.inventory).to eq({ @item4 => 50,
                                         @item3 => 25})
       expect(@vendor3.inventory).to eq({ @item1 => 65})
-      2.times {@vendor1.sell(@item1)}
-      5.times {@vendor1.sell(@item2)}
-      4.times {@vendor2.sell(@item4)}
-      4.times {@vendor2.sell(@item3)}
-      7.times {@vendor3.sell(@item1)}
+      # 2.times {@vendor1.sell(@item1)}
+      # 5.times {@vendor1.sell(@item2)}
+      # 14.times {@vendor2.sell(@item4)}
+      # 4.times {@vendor2.sell(@item3)}
+      # 7.times {@vendor3.sell(@item1)}
 
-      # expect(@market.total_inventory).to eq({@item1 => {9: total_quantity}})
-    end
-  end
-
-  describe "#overstocked items" do
-    it "returns an array of Item objects that are overstocked" do
-      @market.add_vendor(@vendor1)
-      @market.add_vendor(@vendor2)
-      @market.add_vendor(@vendor3)
-
-      expect(@market.overstocked_items).to eq([@item1])
-
-      @vendor2.stock(@item2, 60)
-      expect(@market.overstocked_items).to eq([@item1, @item2])
+      expect(@market.total_inventory).to eq({ @item1 => { quantity: 100,
+                                                          vendors: [@vendor1, @vendor3]},
+                                              @item2 => { quantity: 7,
+                                                          vendors: [@vendor1]},
+                                              @item3 => { quantity: 25,
+                                                          vendors: [@vendor2]},
+                                              @item4 => { quantity: 50,
+                                                          vendors: [@vendor2]}
+                                            })
     end
   end
 end
