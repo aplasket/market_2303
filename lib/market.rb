@@ -50,6 +50,20 @@ class  Market
   end
 
   def total_inventory
+    all_inventory = {}
+    @vendors.map do |vendor|
+      quantity_items = vendor.inventory.map do |item, count|
+        if all_inventory.keys.include?(item)
+            vendor.inventory[item] << item_count
+        else 
+          all_inventory[item] = count
+        end
+      end
+    end
+
+    all_inventory[item] = {quantity: quantity_items,
+                            vendors: vendors_that_sell(item)}
+  
   #   #reports the quanitites of all items sold at the market
   # # {item: { quantity: totalinventory of that item, 
   #           # vendors: [vendors that sell item]}}
@@ -71,19 +85,5 @@ class  Market
                 #   end
                 # end
 
-      ###try new way::
-    all_inventory = {}
-    @vendors.map do |vendor|
-      quantity_items = vendor.inventory.map do |item, count|
-        if vendor.inventory.keys.include?(item)
-            vendor.inventory[item] << item_count
-        else 
-          vendor.inventory[item] = count
-        end
-      end
-    end
-
-    all_inventory[item] = {quantity: quantity_items,
-                            vendors: vendors_that_sell(item)}
   end
 end
