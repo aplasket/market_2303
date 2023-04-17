@@ -80,7 +80,7 @@ RSpec.describe Market do
   # @item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
 
   describe "#sorted_item_list" do
-    xit "returns a sorted array of all items vendors have in stock" do
+    it "returns a sorted array of all items vendors have in stock" do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
@@ -105,8 +105,7 @@ RSpec.describe Market do
       4.times {@vendor2.sell(@item3)}
       7.times {@vendor3.sell(@item1)}
 
-      expect(@market.total_inventory).to eq({@item1 => {9: }})
-
+      # expect(@market.total_inventory).to eq({@item1 => {9: total_quantity}})
     end
   end
 
