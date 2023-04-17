@@ -23,4 +23,12 @@ class Vendor
       @inventory[item] = amount
     end
   end
+
+  def potential_revenue
+    revenue = 0
+    @inventory.each_pair do |item, quantity|
+      revenue += (item.price * quantity)
+    end
+    revenue
+  end
 end
