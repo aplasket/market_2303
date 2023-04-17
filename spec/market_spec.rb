@@ -32,8 +32,11 @@ RSpec.describe Market do
   end
 
   describe "add_vendors" do
-    xit "can add vendors to vendor array" do
-
+    it "can add vendors to vendor array" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      expect(@market.vendors).to eq([@vendor1, @vendor2, @vendor3])
     end
   end
 end
