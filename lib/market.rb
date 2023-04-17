@@ -50,7 +50,6 @@ class  Market
 
     @vendors.map do |vendor|
       vendor.inventory.each_pair do |item, quantity|
-        # require 'pry'; binding.pry
         all_inventory[item] = {quantity: total_quantities(item),
                             vendors: vendors_that_sell(item)}
       end
