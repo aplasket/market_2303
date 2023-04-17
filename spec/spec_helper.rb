@@ -1,3 +1,4 @@
 require 'pry'
 require './lib/item'
 require './lib/vendor'
+require './lib/market'
