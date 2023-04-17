@@ -31,4 +31,8 @@ class Vendor
     end
     revenue
   end
+
+  def sell(item)
+    @inventory[item] -= 1
+  end
 end
