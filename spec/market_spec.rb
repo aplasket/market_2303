@@ -75,7 +75,7 @@ RSpec.describe Market do
   end
 
   describe "#overstocked items" do
-    xit "returns an array of Item objects that are overstocked" do
+    it "returns an array of Item objects that are overstocked" do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
