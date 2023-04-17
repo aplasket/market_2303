@@ -22,13 +22,11 @@ class  Market
   end
 
   def sorted_item_list
-    # array of item.names of all items Vendors have in stock, 
-    # sorted alphabetically
-    # uniq --- no duplicate items listed
     sorted_list = @vendors.map do |vendor|
-      vendor
-      require 'pry'; binding.pry
-    end 
+      vendor.inventory.keys.map do |inventory|
+        sorted_list = inventory.name
+      end
+    end.flatten.uniq.sort
   end
 
   def total_inventory
