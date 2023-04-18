@@ -28,33 +28,56 @@ class  Market
   end
 
   def overstocked_items
-    overstocked_items = []
-    @vendors.map do |vendor|
-      vendor.inventory.each_pair do |item, quantity|
-        if vendors_that_sell(item).count > 1 && total_quantities(item) > 50
-          overstocked_items << item
+    total_inventory.select do |item, info|
+      info[:quantity] > 50 && info[vendors] > 1
+    end.keys
+  end
+
+
+  # def overstocked_items
+  #   overstocked_items = []
+  #   @vendors.map do |vendor|
+  #     vendor.inventory.each_pair do |item, quantity|
+  #       if vendors_that_sell(item).count > 1 && total_quantities(item) > 50
+  #         overstocked_items << item
+  #       end
+  #     end
+  #   end
+  #   overstocked_items.uniq
+  # end
+
+  # def total_quantities(item)
+  #   count = @vendors.map do |vendor| 
+  #     vendor.check_stock(item)
+  #   end.sum
+  # end
+
+  # def total_inventory
+  #   all_inventory = {}
+
+  #   @vendors.map do |vendor|
+  #     vendor.inventory.each_pair do |item, quantity|
+  #       all_inventory[item] = {quantity: total_quantities(item),
+  #                           vendors: vendors_that_sell(item)}
+  #     end
+  #   end
+
+  #   all_inventory
+  # end
+
+  # alternative method to calculate the total inventory
+  def total_inventory
+    total = {}
+    @vendors.each do |vendor|
+      vendor.inventory.each do |item, quantity|
+        if total[item]
+          total[item][:quantity] += quantity
+        else
+          total[item] = { quantity: quantity,
+                          vendors: vendors_that_sell(item) }
         end
       end
     end
-    overstocked_items.uniq
-  end
-
-  def total_quantities(item)
-    count = @vendors.map do |vendor| 
-      vendor.check_stock(item)
-    end.sum
-  end
-
-  def total_inventory
-    all_inventory = {}
-
-    @vendors.map do |vendor|
-      vendor.inventory.each_pair do |item, quantity|
-        all_inventory[item] = {quantity: total_quantities(item),
-                            vendors: vendors_that_sell(item)}
-      end
-    end
-
-    all_inventory
+    total
   end
 end
