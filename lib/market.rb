@@ -22,9 +22,9 @@ class  Market
   end
 
   def sorted_item_list
-    sorted_list = @vendors.map do |vendor|
+    sorted_list = @vendors.flat_map do |vendor|
       vendor.inventory.keys.map {|inventory| inventory.name }
-    end.flatten.uniq.sort
+    end.uniq.sort
   end
 
   def overstocked_items
