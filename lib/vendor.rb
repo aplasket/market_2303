@@ -4,24 +4,15 @@ class Vendor
 
   def initialize(name)
     @name = name
-    @inventory = {}
+    @inventory = Hash.new(0)
   end
 
   def check_stock(item)
-    if @inventory[item].nil?
-      0
-    else
-      @inventory[item]
-    end
+    @inventory[item]
   end
 
   def stock(item, amount)
-    if @inventory.keys.include?(item)
-      new_stock = check_stock(item) + amount
-      @inventory[item] = new_stock
-    else
-      @inventory[item] = amount
-    end
+    @inventory[item] += amount
   end
 
   def potential_revenue
