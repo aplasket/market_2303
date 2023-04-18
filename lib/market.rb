@@ -33,7 +33,24 @@ class  Market
     end.keys
   end
 
+  def total_inventory
+    total = {}
+    @vendors.each do |vendor|
+      vendor.inventory.each do |item, quantity|
+        if total[item]
+          total[item][:quantity] += quantity
+        else
+          total[item] = { quantity: quantity,
+                          vendors: vendors_that_sell(item) }
+        end
+      end
+    end
+    total
+  end
+end
 
+
+#original methods:
   # def overstocked_items
   #   overstocked_items = []
   #   @vendors.map do |vendor|
@@ -64,20 +81,3 @@ class  Market
 
   #   all_inventory
   # end
-
-  # alternative method to calculate the total inventory
-  def total_inventory
-    total = {}
-    @vendors.each do |vendor|
-      vendor.inventory.each do |item, quantity|
-        if total[item]
-          total[item][:quantity] += quantity
-        else
-          total[item] = { quantity: quantity,
-                          vendors: vendors_that_sell(item) }
-        end
-      end
-    end
-    total
-  end
-end
