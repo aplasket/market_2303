@@ -22,62 +22,44 @@ class  Market
   end
 
   def sorted_item_list
-    @vendors.flat_map do |vendor|
-      vendor.inventory.keys.map {|inventory| inventory.name }
-    end.uniq.sort
-  end
-
-  def overstocked_items
-    total_inventory.select do |item, info|
-      info[:quantity] > 50 && info[:vendors].count > 1
-    end.keys
+    #An array of the names of all items the Vendors have in stock, 
+    # sorted alphabetically. 
+    #This list should not include any duplicate items.
+    # [item.name, ...].uniq.sort
+    sorted = []
+    @vendors.each do |vendor|
+      vendor.inventory.keys.each do |item|
+        sorted << item.name
+      end
+    end
+    sorted.uniq.sort
   end
 
   def total_inventory
-    total = {}
+    # Reports the quantities of all items sold at the market. 
+    #Specifically, it should return a hash with items as keys and hashes as values - 
+    #this sub-hash should have two key/value pairs: 
+    #   quantity pointing to total inventory for that item and 
+    #   vendors pointing to an array of the vendors that sell that item. 
+
+    # {item_object => {quantity: amount, vendors: [vendor_objects]}
+    all_inventory = {}
     @vendors.each do |vendor|
-      vendor.inventory.each do |item, quantity|
-        if total[item]
-          total[item][:quantity] += quantity
+      vendor.inventory.each do |item, amount|
+        if all_inventory.keys.include?(item) 
+          all_inventory[item][:quantity] += amount
         else
-          total[item] = { quantity: quantity,
-                          vendors: vendors_that_sell(item) }
+          all_inventory[item] = {quantity: amount,
+                                vendors: vendors_that_sell(item)}
         end
       end
     end
-    total
+    all_inventory
+  end
+
+  def overstocked_items
+    #An array of `Item` objects that are overstocked. 
+    #An item is overstocked if it is sold by more than 1 vendor AND the total quantity is greater than 50.
+
   end
 end
-
-
-#original methods:
-  # def overstocked_items
-  #   overstocked_items = []
-  #   @vendors.map do |vendor|
-  #     vendor.inventory.each_pair do |item, quantity|
-  #       if vendors_that_sell(item).count > 1 && total_quantities(item) > 50
-  #         overstocked_items << item
-  #       end
-  #     end
-  #   end
-  #   overstocked_items.uniq
-  # end
-
-  # def total_quantities(item)
-  #   count = @vendors.map do |vendor| 
-  #     vendor.check_stock(item)
-  #   end.sum
-  # end
-
-  # def total_inventory
-  #   all_inventory = {}
-
-  #   @vendors.map do |vendor|
-  #     vendor.inventory.each_pair do |item, quantity|
-  #       all_inventory[item] = {quantity: total_quantities(item),
-  #                           vendors: vendors_that_sell(item)}
-  #     end
-  #   end
-
-  #   all_inventory
-  # end
