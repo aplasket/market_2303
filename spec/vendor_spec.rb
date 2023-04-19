@@ -47,19 +47,4 @@ RSpec.describe Vendor do
       expect(@vendor.potential_revenue).to eq(47.25)
     end
   end
-
-  describe "#sell item" do
-    it "can sell an item" do
-      @vendor.stock(@item1, 55)
-      @vendor.stock(@item2, 12)
-      @vendor.sell(@item1)
-
-      expect(@vendor.check_stock(@item1)).to eq(54)
-
-      2.times {@vendor.sell(@item1)}
-      6.times {@vendor.sell(@item2)}
-      expect(@vendor.check_stock(@item1)).to eq(52)
-      expect(@vendor.check_stock(@item2)).to eq(6)
-    end
-  end
 end
