@@ -59,7 +59,15 @@ class  Market
 
   def overstocked_items
     #An array of `Item` objects that are overstocked. 
-    #An item is overstocked if it is sold by more than 1 vendor AND the total quantity is greater than 50.
+    #An item is overstocked if it is sold by more than 1 vendor 
+    #AND the total quantity is greater than 50.
 
+    #check total inventory for quantity, if over > 50 
+    #check vendors_that_sell(item).count > 1
+    # return an array of item objects
+    total_inventory.each do |item|
+      require 'pry'; binding.pry
+
+    end
   end
 end
