@@ -65,9 +65,21 @@ class  Market
     #check total inventory for quantity, if over > 50 
     #check vendors_that_sell(item).count > 1
     # return an array of item objects
-    total_inventory.each do |item|
-      require 'pry'; binding.pry
-
+    overstocked = total_inventory.select do |item, hash|
+      hash[:quantity] > 50 && hash[:vendors].count > 1
     end
+    overstocked.keys
   end
 end
+
+
+# other ways:
+# def overstocked_items
+#   overstocked = []
+#   total_inventory.each do |item|
+#     if item[1][:quantity] > 50 && item[1][:vendors].count > 1
+#       overstocked << item.first
+#     end
+#   end
+#   overstocked
+# end

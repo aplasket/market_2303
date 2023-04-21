@@ -74,6 +74,16 @@ RSpec.describe Market do
     end
   end
 
+  describe "#sorted_item_list" do
+    it "returns a sorted array of all items vendors have in stock" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", 'Peach', "Peach-Raspberry Nice Cream", 'Tomato'])
+    end
+  end
+
   describe "#overstocked items" do
     it "returns an array of Item objects that are overstocked" do
       @market.add_vendor(@vendor1)
@@ -84,18 +94,7 @@ RSpec.describe Market do
 
       @vendor3.stock(@item2, 10)
       @vendor3.stock(@item3, 26)
-
       expect(@market.overstocked_items).to eq([@item1, @item3])
-    end
-  end
-
-  describe "#sorted_item_list" do
-    it "returns a sorted array of all items vendors have in stock" do
-      @market.add_vendor(@vendor1)
-      @market.add_vendor(@vendor2)
-      @market.add_vendor(@vendor3)
-
-      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", 'Peach', "Peach-Raspberry Nice Cream", 'Tomato'])
     end
   end
 
@@ -109,11 +108,6 @@ RSpec.describe Market do
       expect(@vendor2.inventory).to eq({ @item4 => 50,
                                         @item3 => 25})
       expect(@vendor3.inventory).to eq({ @item1 => 65})
-      # 2.times {@vendor1.sell(@item1)}
-      # 5.times {@vendor1.sell(@item2)}
-      # 14.times {@vendor2.sell(@item4)}
-      # 4.times {@vendor2.sell(@item3)}
-      # 7.times {@vendor3.sell(@item1)}
 
       expect(@market.total_inventory).to eq({ @item1 => { quantity: 100,
                                                           vendors: [@vendor1, @vendor3]},
